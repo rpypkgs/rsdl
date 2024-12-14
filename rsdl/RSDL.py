@@ -29,6 +29,10 @@ RWopsPtr            = lltype.Ptr(lltype.ForwardReference())
 CursorPtr           = lltype.Ptr(lltype.ForwardReference())
 AudioSpecPtr        = lltype.Ptr(lltype.ForwardReference())
 
+# NB: deliberately erasing type of buffer to ease larger sample sizes
+AudioCallback = lltype.Ptr(lltype.FuncType([rffi.VOIDP, rffi.VOIDP, rffi.INT],
+                                           lltype.Void))
+
 # ------------------------------------------------------------------------------
 
 class CConfig:
@@ -100,10 +104,6 @@ class CConfig:
     RWops = platform.Struct('SDL_RWops', [])
 
     Cursor = platform.Struct('SDL_Cursor', [])
-
-    # NB: deliberately erasing type of buffer to ease larger sample sizes
-    AudioCallback = lltype.Ptr(lltype.FuncType([rffi.VOIDP, rffi.VOIDP, rffi.INT],
-                                               lltype.Void))
 
     AudioSpec        = platform.Struct('SDL_AudioSpec',
                                     [('freq', rffi.INT),
