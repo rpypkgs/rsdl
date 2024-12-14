@@ -27,16 +27,17 @@ MouseMotionEventPtr = lltype.Ptr(lltype.ForwardReference())
 KeyPtr              = lltype.Ptr(lltype.ForwardReference())
 RWopsPtr            = lltype.Ptr(lltype.ForwardReference())
 CursorPtr           = lltype.Ptr(lltype.ForwardReference())
+AudioSpecPtr        = lltype.Ptr(lltype.ForwardReference())
 
 # ------------------------------------------------------------------------------
 
 class CConfig:
     _compilation_info_ = eci
 
-    Uint8  = platform.SimpleType('Uint8',  rffi.INT)
-    Uint16 = platform.SimpleType('Uint16', rffi.INT)
-    Sint16 = platform.SimpleType('Sint16', rffi.INT)
-    Uint32 = platform.SimpleType('Uint32', rffi.INT)
+    Uint8  = platform.SimpleType('Uint8',  rffi.UCHAR)
+    Uint16 = platform.SimpleType('Uint16', rffi.USHORT)
+    Sint16 = platform.SimpleType('Sint16', rffi.SHORT)
+    Uint32 = platform.SimpleType('Uint32', rffi.UINT)
 
     Rect             = platform.Struct('SDL_Rect',
                                     [('x', rffi.INT),
@@ -100,6 +101,20 @@ class CConfig:
 
     Cursor = platform.Struct('SDL_Cursor', [])
 
+    # NB: deliberately erasing type of buffer to ease larger sample sizes
+    AudioCallback = lltype.Ptr(lltype.FuncType([rffi.VOIDP, rffi.VOIDP, rffi.INT],
+                                               lltype.Void))
+
+    AudioSpec        = platform.Struct('SDL_AudioSpec',
+                                    [('freq', rffi.INT),
+                                     ('format', rffi.USHORT),
+                                     ('channels', rffi.UCHAR),
+                                     ('silence', rffi.UCHAR),
+                                     ('samples', rffi.USHORT),
+                                     ('size', rffi.UINT),
+                                     ('callback', AudioCallback),
+                                     ('userdata', rffi.VOIDP)])
+
 # ------------------------------------------------------------------------------
 
 for _prefix, _list in _constants.items():
@@ -122,6 +137,7 @@ MouseButtonEventPtr.TO.become(MouseButtonEvent)
 MouseMotionEventPtr.TO.become(MouseMotionEvent)
 RWopsPtr.TO.become(RWops)
 CursorPtr.TO.become(Cursor)
+AudioSpecPtr.TO.become(AudioSpec)
 
 # ------------------------------------------------------------------------------
 
@@ -284,6 +300,18 @@ FreeCursor       = external('SDL_FreeCursor',
 GetVideoSurface  = external('SDL_GetVideoSurface',
                             [],
                             SurfacePtr)
+
+OpenAudio        = external('SDL_OpenAudio',
+                            [AudioSpecPtr, AudioSpecPtr],
+                            rffi.INT)
+
+CloseAudio       = external('SDL_CloseAudio',
+                            [],
+                            lltype.Void)
+
+PauseAudio       = external('SDL_PauseAudio',
+                            [rffi.INT],
+                            lltype.Void)
 
 # ------------------------------------------------------------------------------
 

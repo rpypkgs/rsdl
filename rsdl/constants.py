@@ -49,10 +49,10 @@ _constants = {
         "MOUSEBUTTONDOWN",
         "MOUSEBUTTONUP",
         "BUTTON_LEFT",
-        "BUTTON_MIDDLE", 
+        "BUTTON_MIDDLE",
         "BUTTON_RIGHT",
-        "BUTTON_WHEELUP", 
-        "BUTTON_WHEELDOWN", 
+        "BUTTON_WHEELUP",
+        "BUTTON_WHEELDOWN",
         "JOYAXISMOTION",
         "JOYBALLMOTION",
         "JOYHATMOTION",
@@ -78,7 +78,7 @@ _constants = {
         "HAT_LEFTDOWN",
         "HAT_LEFT",
         "HAT_LEFTUP",
-        
+
         "DISABLE",
         "ENABLE",
 
