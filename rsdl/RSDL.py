@@ -301,6 +301,10 @@ GetVideoSurface  = external('SDL_GetVideoSurface',
                             [],
                             SurfacePtr)
 
+AudioDriverName  = external('SDL_AudioDriverName',
+                            [rffi.CCHARP, rffi.INT],
+                            rffi.CCHARP)
+
 OpenAudio        = external('SDL_OpenAudio',
                             [AudioSpecPtr, AudioSpecPtr],
                             rffi.INT)
@@ -311,6 +315,18 @@ CloseAudio       = external('SDL_CloseAudio',
 
 PauseAudio       = external('SDL_PauseAudio',
                             [rffi.INT],
+                            lltype.Void)
+
+GetAudioStatus   = external('SDL_GetAudioStatus',
+                            [],
+                            rffi.INT)
+
+LockAudio        = external('SDL_LockAudio',
+                            [],
+                            lltype.Void)
+
+UnlockAudio      = external('SDL_UnlockAudio',
+                            [],
                             lltype.Void)
 
 # ------------------------------------------------------------------------------

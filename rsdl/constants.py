@@ -82,6 +82,10 @@ _constants = {
         "DISABLE",
         "ENABLE",
 
+        "AUDIO_STOPPED",
+        "AUDIO_PLAYING",
+        "AUDIO_PAUSED",
+
         # the following ones are not exposed in Pygame
         "INIT_VIDEO",
         "BYTEORDER",
